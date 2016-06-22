@@ -23,7 +23,7 @@ bool LogEntry::LoadFile(System::String^ inFileName)
 			strUpload = inFile->ReadToEnd(); // read entire file into upload string
 			inFile->Close();
 			inFile = File::OpenText(inFileName);
-			for (int intIndex=0; intIndex<13; intIndex++) inFile->ReadLine(); // dump first set of lines according to saveDataFormat
+			for (int intIndex=0; intIndex<13; intIndex++) inFile->ReadLine(); // dump first 13 lines
 			this->position->id = 0;
 			this->position->SetNavPos(new Pos
 			(
@@ -41,7 +41,7 @@ bool LogEntry::LoadFile(System::String^ inFileName)
 			// comment this line out if using version previous to 1.180
 			this->SetName((char*)Marshal::StringToHGlobalAnsi(inFile->ReadLine()).ToPointer());
 			
-			for (int intIndex=0; intIndex<45; intIndex++) inFile->ReadLine(); // dump next set of lines according to saveDataFormat
+			for (int intIndex=0; intIndex<45; intIndex++) inFile->ReadLine(); // dump next 45 lines
 			this->jumpRange = 0;
 			while (this->jumpRange<1 && !inFile->EndOfStream)
 			{
