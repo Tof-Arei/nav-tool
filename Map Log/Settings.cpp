@@ -12,7 +12,10 @@ Settings::Settings(void)
 	this->strDMapOutFile = "";
 	this->strGameLogFile = "";
 	this->strMapLogFile = "";
-	this->intFontSize = 14;
+	this->intFontSize = 10;
+	this->strFontColor = "White";
+	this->strJmpLinesColor = "Yellow";
+	this->strSystemColor = "Green";
 	this->intInterval = 5000;
 	this->strURL = "";
 	this->intPort = 80; // standard TCP port
@@ -149,7 +152,10 @@ void Settings::LoadSettings()
 			if (strTokens[0] =="Output Interval" && strTokens->Length>=2) this->intInterval = System::Convert::ToInt32(strTokens[1]);
 			if (strTokens[0] =="URL" && strTokens->Length>=2) this->strURL = strTokens[1];
 			if (strTokens[0] =="Port" && strTokens->Length>=2) this->intPort = System::Convert::ToInt32(strTokens[1]);
-			if (strTokens[0] =="Font" && strTokens->Length>=2)
+			if (strTokens[0] =="Font Size" && strTokens->Length>=2) this->intFontSize = System::Convert::ToInt32(strTokens[1]);
+			if (strTokens[0] =="Font Color" && strTokens->Length>=2) this->strFontColor = strTokens[1];
+			if (strTokens[0] =="JmpLines Color" && strTokens->Length>=2) this->strJmpLinesColor = strTokens[1];
+			if (strTokens[0] =="System Color" && strTokens->Length>=2) this->strSystemColor = strTokens[1];
 			if (strTokens[0] =="[Save Data Format]")
 			{
 				strCurrentLine = inFile->ReadLine();
@@ -198,6 +204,10 @@ void Settings::SaveSettings()
 	outFile->WriteLine("Dynamic Map Output File=" + this->strDMapOutFile);
 	outFile->WriteLine("[Settings]");
 	outFile->WriteLine("Output Interval=" + this->intInterval);
+	outFile->WriteLine("Font Size=" + this->intFontSize);
+	outFile->WriteLine("Font Color=" + this->strFontColor);
+	outFile->WriteLine("JmpLines Color=" + this->strJmpLinesColor);
+	outFile->WriteLine("System Color=" + this->strSystemColor);
 	outFile->WriteLine("URL=" + this->strURL);
 	outFile->WriteLine("Port=" + this->intPort);
 	outFile->WriteLine("[Save Data Format]");

@@ -419,7 +419,10 @@ System::Void Navigation::saveToolStripMenuItem_Click(System::Object^  sender, Sy
 			currentUniverse,
 			frmSettings->strDMapInFile->Replace("\\", "\\\\"), 
 			frmSettings->strDMapOutFile->Replace("\\", "\\\\"),
-			frmSettings->intFontSize
+			frmSettings->intFontSize,
+			frmSettings->strFontColor,
+			frmSettings->strJmpLinesColor,
+			frmSettings->strSystemColor
 		);
 	}
 	

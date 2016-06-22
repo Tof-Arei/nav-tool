@@ -21,6 +21,9 @@ namespace MapLog {
 		System::String^ strDMapInFile;
 		System::String^ strDMapOutFile;
 		int intFontSize;
+		System::String^ strFontColor;
+		System::String^ strJmpLinesColor;
+		System::String^ strSystemColor;
 		System::String^ strURL;
 		System::String^ strSaveDataFormat;
 		int intPort;

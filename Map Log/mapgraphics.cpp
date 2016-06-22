@@ -25,7 +25,7 @@ MapGraphics::~MapGraphics(void)
 {
 }
 
-void MapGraphics::RenderMap(NavData* inNav, System::String^ sourceFile, System::String^ destFile, int fontSize)
+void MapGraphics::RenderMap(NavData* inNav, System::String^ sourceFile, System::String^ destFile, int fontSize, System::String^ fontColor, System::String^ jmpLinesColor, System::String^ systemColor)
 { // note that the game Z axis maps onto the display Y axis
 	
 	System::Drawing::Brush^ currentBrush;
@@ -37,11 +37,11 @@ void MapGraphics::RenderMap(NavData* inNav, System::String^ sourceFile, System::
 	Pos pos2;
 	NavEntry* currentEntry;
 	NavEntry* navDest = new NavEntry();
-	currentFont = gcnew System::Drawing::Font(System::Drawing::FontFamily::GenericSansSerif,fontSize);
+	currentFont = gcnew System::Drawing::Font(System::Drawing::FontFamily::GenericSansSerif,(float)fontSize);
 	this->sourceImage = System::Drawing::Image::FromFile(sourceFile);
 	this->canvas = System::Drawing::Graphics::FromImage(this->sourceImage);
 	
-	currentPen = gcnew System::Drawing::Pen(System::Drawing::Color::Yellow);
+	currentPen = gcnew System::Drawing::Pen(System::Drawing::Color::FromName(jmpLinesColor));
 	
 	for (int intIndex = 0; intIndex<inNav->GetEntryCount(); intIndex++)
 	{ // display jump lines
@@ -71,7 +71,7 @@ void MapGraphics::RenderMap(NavData* inNav, System::String^ sourceFile, System::
 			
 			pos1 = this->CalculateScale(pos1);
 			
-			currentBrush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::Green);
+			currentBrush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromName(systemColor));
 			this->canvas->FillEllipse(
 				currentBrush,
 				float(pos1.x)-5,
@@ -82,7 +82,7 @@ void MapGraphics::RenderMap(NavData* inNav, System::String^ sourceFile, System::
 			currentText = gcnew System::String(currentEntry->name);
 			textSize = this->canvas->MeasureString(currentText, currentFont);
 			
-		currentBrush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::White);
+			currentBrush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromName(fontColor));
 			this->canvas->DrawString(
 				currentText, currentFont, currentBrush, 
 				float(pos1.x) - (textSize.Width/2), 
@@ -90,6 +90,7 @@ void MapGraphics::RenderMap(NavData* inNav, System::String^ sourceFile, System::
 			);
 		}
 	}
+
 	delete navDest;
 	this->canvas->Save();
 	this->sourceImage->Save(destFile);
