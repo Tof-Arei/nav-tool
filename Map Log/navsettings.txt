@@ -1,0 +1,2 @@
+c:\sw3dg\EvochronMercenary\maplog0.sw
+c:\sw3dg\EvochronMercenary\savedata.txt

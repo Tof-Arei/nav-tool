@@ -1,0 +1,57 @@
+Atollski
+129
+40,235,984
+Empty
+Empty
+Empty
+Empty
+Empty
+-9930
+11445
+189
+-1052
+0
+-5052
+100
+100
+100
+100
+100
+100
+100
+100
+100
+Leviathan
+Med
+5750
+100
+100
+100
+100
+100
+100
+100
+
+
+
+
+
+0
+Phantom
+Fusion Laser 
+Excalibur
+Empty
+Empty
+Empty
+Empty
+Empty
+Empty
+Empty
+Mine/Tractor Beam 
+Repair Sys C3 
+Cannon Relay Sys 
+Fulcrum Drive C5 
+Shield Boost X5 
+Deploy Constructor
+Build Constructor
+Anti-Missile System 

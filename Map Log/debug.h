@@ -1,0 +1,1 @@
+bool DebugFile(System::String^ strDebug);

@@ -1,0 +1,16 @@
+Tested/fixed:
+- New system notification
+- Trilateration tool
+- Link jumpgates
+- Reading/injecting map log
+- Custom map injection
+
+Added/restored:
+- Font size option for dynamic map (file only)
+
+To test/restore/fix:
+- Font size and map colors options + GUI
+- Make the app work for both Mercenary and Legacy using [Save Data Format] in map log.cfg
+- Route calculator: remove the extra step(s) backwards?
+- Sending data to HTTP server
+- ?
