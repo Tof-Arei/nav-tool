@@ -6,11 +6,12 @@ Tested/fixed:
 - Custom map injection
 
 Added/restored:
-- Font size option for dynamic map (file only)
+- Font size, color and map color options for dynamic map (config file only)
+- Make the app work for both Mercenary and Legacy using [Save Data Format] in map log.cfg
 
 To test/restore/fix:
-- Font size and map colors options + GUI
-- Make the app work for both Mercenary and Legacy using [Save Data Format] in map log.cfg
+- Font style option for dynamic map
+- Dynamic map options GUI
 - Route calculator: remove the extra step(s) backwards?
 - Sending data to HTTP server
 - ?

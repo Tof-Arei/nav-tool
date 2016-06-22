@@ -9,7 +9,7 @@ class LogEntry
 		char* systemName;
 		NavEntry* position;
 		// functions
-		bool LoadFile(System::String^ inFileName);
+		bool LoadFile(System::String^ inFileName, System::String^ saveDataFormat);
 		LogEntry(void);
 		~LogEntry(void);
 		void SetName(char* inName);

@@ -332,7 +332,7 @@ System::Void Navigation::rangeToolStripMenuItem_Click(System::Object^  sender, S
 	LogEntry* currentPos = new LogEntry();
 	if (File::Exists(this->frmSettings->strGameLogFile->Replace("\\","\\\\")))
 	{ // log file exists
-		if (currentPos->LoadFile(this->frmSettings->strGameLogFile->Replace("\\","\\\\")))
+		if (currentPos->LoadFile(this->frmSettings->strGameLogFile->Replace("\\","\\\\"), frmSettings->strSaveDataFormat))
 		{ // file loaded correctly
 			this->currentUniverse->SortRange(currentPos->position);
 			this->currentUniverse->IndexEntries();
@@ -480,7 +480,7 @@ System::Void Navigation::timRefresh_Tick(System::Object^ sender, System::EventAr
 			double dblRange;
 
 			this->logDate = File::GetLastWriteTime(strFileName);
-			logImport->LoadFile(strFileName);
+			logImport->LoadFile(strFileName, frmSettings->strSaveDataFormat);
 
 			if (this->chkLoadLog->Checked)
 			{ // append data to log file
@@ -662,7 +662,7 @@ System::Void Navigation::treeObjects_DoubleClick(System::Object^ sender, System:
 	if (File::Exists(this->frmSettings->strGameLogFile->Replace("\\","\\\\")))
 	{ // valid input 
 		LogEntry* navStart = new LogEntry;
-		navStart->LoadFile(this->frmSettings->strGameLogFile->Replace("\\","\\\\"));
+		navStart->LoadFile(this->frmSettings->strGameLogFile->Replace("\\","\\\\"), frmSettings->strSaveDataFormat);
 		navStart->position->SetName("Start Position");
 		if (this->navSelected!=NULL)
 		{
