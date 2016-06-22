@@ -9,17 +9,11 @@ using namespace System;
 using namespace System::IO;
 using namespace System::Runtime::InteropServices;	// for String->char* conversion
 
-bool LogEntry::LoadFile(System::String^ inFileName, System::String^ saveDataFormat)
+bool LogEntry::LoadFile(System::String^ inFileName)
 {
 	System::String^ strCurrent;
 	System::String^ strUpload;
 	bool returnValue = true;
-
-	array<wchar_t>^ strSeparators;
-	array<String^>^ strSaveTokens;
-	strSeparators = gcnew array<wchar_t>(1); // one entry array
-	strSeparators[0] = ',';
-	strSaveTokens = saveDataFormat->Split(strSeparators, 2);
 
 	if (File::Exists(inFileName))
 	{
@@ -29,7 +23,7 @@ bool LogEntry::LoadFile(System::String^ inFileName, System::String^ saveDataForm
 			strUpload = inFile->ReadToEnd(); // read entire file into upload string
 			inFile->Close();
 			inFile = File::OpenText(inFileName);
-			for (int intIndex=0; intIndex<System::Convert::ToInt32(strSaveTokens[0]); intIndex++) inFile->ReadLine(); // dump first set of lines according to saveDataFormat
+			for (int intIndex=0; intIndex<13; intIndex++) inFile->ReadLine(); // dump first set of lines according to saveDataFormat
 			this->position->id = 0;
 			this->position->SetNavPos(new Pos
 			(
@@ -47,7 +41,7 @@ bool LogEntry::LoadFile(System::String^ inFileName, System::String^ saveDataForm
 			// comment this line out if using version previous to 1.180
 			this->SetName((char*)Marshal::StringToHGlobalAnsi(inFile->ReadLine()).ToPointer());
 			
-			for (int intIndex=0; intIndex<System::Convert::ToInt32(strSaveTokens[1]); intIndex++) inFile->ReadLine(); // dump next set of lines according to saveDataFormat
+			for (int intIndex=0; intIndex<45; intIndex++) inFile->ReadLine(); // dump next set of lines according to saveDataFormat
 			this->jumpRange = 0;
 			while (this->jumpRange<1 && !inFile->EndOfStream)
 			{

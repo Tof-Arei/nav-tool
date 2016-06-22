@@ -26,6 +26,10 @@ namespace MapLog {
 		System::String^ strSystemColor;
 		System::String^ strURL;
 		System::String^ strSaveDataFormat;
+
+	public: 
+
+	public: 
 		int intPort;
 		
 		// functions

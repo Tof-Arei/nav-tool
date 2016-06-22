@@ -7,7 +7,6 @@ Tested/fixed:
 
 Added/restored:
 - Font size, color and map color options for dynamic map (config file only)
-- Make the app work for both Mercenary and Legacy using [Save Data Format] in map log.cfg
 
 To test/restore/fix:
 - Font style option for dynamic map
