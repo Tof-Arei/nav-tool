@@ -37,11 +37,6 @@ System::Windows::Forms::DialogResult Settings::LoadAndShow()
 	return __super::ShowDialog();
 }
 
-unsigned int Settings::RgbToInteger(int r, int g, int b)
-{
-	return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
-}
-
 System::Void Settings::btnOK_Click(System::Object^  sender, System::EventArgs^  e) 
 {
 	this->strDMapInFile = this->txtMapInputFile->Text;
