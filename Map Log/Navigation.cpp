@@ -67,6 +67,7 @@ void Navigation::Save()
 			frmSettings->strSystemColor
 		);
 	}
+	System::GC::Collect();
 }
 
 System::Void Navigation::attemptTrilaterationToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
@@ -346,7 +347,6 @@ System::Void Navigation::optionsToolStripMenuItem_Click(System::Object^  sender,
 	if (this->frmSettings->LoadAndShow() == System::Windows::Forms::DialogResult::OK)
     {
 		this->Save();
-		System::GC::Collect();
 	}
 }
 
