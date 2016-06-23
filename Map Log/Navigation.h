@@ -2,7 +2,7 @@
 #include "navdata.h"
 #include "log.h"
 #include "route.h"
-#include "settings.h"
+#include "Settings.h"
 
 #define SAVEFILE "navdata.txt"
 #define LOGFILE "logdata.txt"
@@ -31,6 +31,7 @@ namespace MapLog {
 	public:
 		Navigation(void);
 		void RefreshForm(void);
+		void Save(void);
 	protected:
 		~Navigation();
 	private: 
@@ -48,22 +49,9 @@ namespace MapLog {
 		System::Windows::Forms::ImageList^  imgTree;
 		System::Windows::Forms::TreeView^  treeObjects;
 		System::Windows::Forms::TextBox^  txtValue;
-
 		System::Windows::Forms::TextBox^  txtDisplayPos;
 		System::Windows::Forms::Timer^  timRefresh;
 		System::Windows::Forms::SplitContainer^  splitInterface;
-
-
-
-
-
-
-
-
-
-
-
-
 		System::Windows::Forms::CheckBox^  chkLoadNav;
 		System::Windows::Forms::CheckBox^  chkUpdateNav;
 		System::Windows::Forms::CheckBox^  chkLoadLog;
@@ -91,20 +79,6 @@ namespace MapLog {
 	private: System::Windows::Forms::ToolStripMenuItem^  optionsToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripTextBox^  txtSearch;
 	private: System::Windows::Forms::ComboBox^  cboType;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 		System::ComponentModel::IContainer^  components;
 		
@@ -522,7 +496,7 @@ namespace MapLog {
 				static_cast<System::Int32>(static_cast<System::Byte>(192)));
 			this->txtSearch->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->txtSearch->Name = L"txtSearch";
-			this->txtSearch->Size = System::Drawing::Size(75, 25);
+			this->txtSearch->Size = System::Drawing::Size(75, 23);
 			this->txtSearch->DoubleClick += gcnew System::EventHandler(this, &Navigation::txtSearch_DoubleClick);
 			this->txtSearch->TextChanged += gcnew System::EventHandler(this, &Navigation::txtSearch_TextChanged);
 			// 

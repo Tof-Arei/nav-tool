@@ -5,7 +5,6 @@
 #include "mapgraphics.h"
 #include "Navigation.h"
 #include "uploader.h"
-#include "settings.h"
 #include "debug.h"
 
 using namespace MapLog;
@@ -27,9 +26,8 @@ Navigation::Navigation(void)
 	if (File::Exists(SAVEFILE))
 		currentUniverse->LoadFile(SAVEFILE);
 	
-	this->DisplayTree(currentUniverse);	
+	this->DisplayTree(currentUniverse);
 	routeCalc = new Route();
-
 }
 
 Navigation::~Navigation()
@@ -47,6 +45,28 @@ Navigation::~Navigation()
 	delete currentUniverse;
 	delete currentLog;
 	delete routeCalc;
+}
+
+void Navigation::Save()
+{
+	currentUniverse->SaveFile(SAVEFILE, true);
+	float scaleX = 12250.0f;
+	float scaleY = 12250.0f;
+	MapGraphics^ mapTest = gcnew MapGraphics(0.1f,0.1f,-scaleX/2.0f,-scaleY/2,scaleX,scaleY);
+	//mapTest->RenderMap(currentUniverse, "Background.jpg", "S:\\sw3dg\\EvochronMercenary\\hud\\map.png");
+	if (File::Exists(frmSettings->strDMapInFile->Replace("\\", "\\\\")))
+	{
+		mapTest->RenderMap(
+			currentUniverse,
+			frmSettings->strDMapInFile->Replace("\\", "\\\\"), 
+			frmSettings->strDMapOutFile->Replace("\\", "\\\\"),
+			frmSettings->strFont,
+			frmSettings->intFontSize,
+			frmSettings->strFontColor,
+			frmSettings->strJmpLinesColor,
+			frmSettings->strSystemColor
+		);
+	}
 }
 
 System::Void Navigation::attemptTrilaterationToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
@@ -323,7 +343,10 @@ System::Void Navigation::Navigation_Activated(System::Object^  sender, System::E
 
 System::Void Navigation::optionsToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	this->frmSettings->Show();
+	if (this->frmSettings->LoadAndShow() == System::Windows::Forms::DialogResult::OK)
+    {
+		this->Save();
+	}
 }
 
 System::Void Navigation::rangeToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
@@ -408,24 +431,7 @@ void Navigation::RefreshForm(void)
 
 System::Void Navigation::saveToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	currentUniverse->SaveFile(SAVEFILE, true);
-	float scaleX = 12250.0f;
-	float scaleY = 12250.0f;
-	MapGraphics^ mapTest = gcnew MapGraphics(0.1f,0.1f,-scaleX/2.0f,-scaleY/2,scaleX,scaleY);
-	//mapTest->RenderMap(currentUniverse, "Background.jpg", "S:\\sw3dg\\EvochronMercenary\\hud\\map.png");
-	if (File::Exists(frmSettings->strDMapInFile->Replace("\\", "\\\\")))
-	{
-		mapTest->RenderMap(
-			currentUniverse,
-			frmSettings->strDMapInFile->Replace("\\", "\\\\"), 
-			frmSettings->strDMapOutFile->Replace("\\", "\\\\"),
-			frmSettings->intFontSize,
-			frmSettings->strFontColor,
-			frmSettings->strJmpLinesColor,
-			frmSettings->strSystemColor
-		);
-	}
-	
+	this->Save();
 }
 
 System::Void Navigation::selectedNodeToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)

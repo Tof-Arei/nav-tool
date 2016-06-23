@@ -1,4 +1,5 @@
 #pragma once
+
 #define OLDSETTINGS "navsettings.txt"
 #define NEWSETTINGS "map log.cfg"
 
@@ -10,84 +11,91 @@ using namespace System::Data;
 using namespace System::Drawing;
 
 namespace MapLog {
-
 	public ref class Settings : public System::Windows::Forms::Form
 	{
 		// variables
 		public:
-		System::String^ strGameLogFile;
-		System::String^ strMapLogFile;
-		int intInterval;
-		System::String^ strDMapInFile;
-		System::String^ strDMapOutFile;
-		int intFontSize;
-		System::String^ strFontColor;
-		System::String^ strJmpLinesColor;
-		System::String^ strSystemColor;
-		System::String^ strURL;
-		System::String^ strSaveDataFormat;
+			System::String^ strGameLogFile;
+			System::String^ strMapLogFile;
+			int intInterval;
+			System::String^ strDMapInFile;
+			System::String^ strDMapOutFile;
+			int intFontSize;
+			System::String^ strFont;
+			System::String^ strFontColor;
+			System::String^ strJmpLinesColor;
+			System::String^ strSystemColor;
+			int intPort;
+			System::String^ strURL;
+			System::String^ strSaveDataFormat;
+		private:
+			System::Windows::Forms::Button^  btnFontStyle;
+			System::Windows::Forms::Button^  btnFontColor;
+			System::Windows::Forms::Button^  btnSystemColor;
+			System::Windows::Forms::Button^  btnLineColor;
+			System::Windows::Forms::FontDialog^  dialFontStyle;
+			System::Windows::Forms::ColorDialog^  dialColor;
+			System::Windows::Forms::PictureBox^  imgMap;
 
-	public: 
-
-	public: 
-		int intPort;
-		
-		// functions
-		Settings(void);
+		public: 
+			// functions
+			Settings();
+			System::Windows::Forms::DialogResult LoadAndShow();
 		protected:
-		~Settings();
-		public:
-		System::Void btnCancel_Click(System::Object^  sender, System::EventArgs^  e);
-		private: System::Void btnGameLogFile_Click(System::Object^  sender, System::EventArgs^  e);
-		private: System::Void btnMapInputFile_Click(System::Object^  sender, System::EventArgs^  e);
-		private: System::Void btnMapLogFile_Click(System::Object^  sender, System::EventArgs^  e);
-		private: System::Void btnMapOutputFile_Click(System::Object^  sender, System::EventArgs^  e);
-		System::Void btnOK_Click(System::Object^  sender, System::EventArgs^  e);
+			~Settings();
+			void RefreshComponents();
+			void LoadSettings();
+			void SaveSettings();
+
+		private:
+			System::Void btnCancel_Click(System::Object^  sender, System::EventArgs^  e);
+			System::Void btnGameLogFile_Click(System::Object^  sender, System::EventArgs^  e);
+			System::Void btnMapInputFile_Click(System::Object^  sender, System::EventArgs^  e);
+			System::Void btnMapLogFile_Click(System::Object^  sender, System::EventArgs^  e);
+			System::Void btnMapOutputFile_Click(System::Object^  sender, System::EventArgs^  e);
+			System::Void btnOK_Click(System::Object^  sender, System::EventArgs^  e);
+			System::Void Settings::btnFontStyle_Click(System::Object^  sender, System::EventArgs^  e);
+			System::Void Settings::btnFontColor_Click(System::Object^  sender, System::EventArgs^  e);
+			System::Void Settings::btnLineColor_Click(System::Object^  sender, System::EventArgs^  e);
+			System::Void Settings::btnSystemColor_Click(System::Object^  sender, System::EventArgs^  e);
+			
+		private:
+			System::Windows::Forms::Button^  btnCancel;
+			System::Windows::Forms::Button^  btnOK;
+			System::Windows::Forms::TabPage^  tabMap;
+			System::Windows::Forms::TabPage^  tabConnection;
+			System::Windows::Forms::Button^  btnGetProcessing;
+			System::Windows::Forms::TextBox^  txtSavedataFormat;
+			System::Windows::Forms::TextBox^  txtPort;
+			System::Windows::Forms::TextBox^  txtURL;
+			System::Windows::Forms::Label^  lblProcessing;
+			System::Windows::Forms::Label^  lblPortComment;
+			System::Windows::Forms::Label^  lblConnectionDescription;
+			System::Windows::Forms::Label^  lblPort;
+			System::Windows::Forms::Label^  lblURL;
+			System::Windows::Forms::TabControl^  tabcSettings;
+			System::Windows::Forms::TabPage^  tabGeneral;
+			System::Windows::Forms::Label^  lblMapLogFile;
+			System::Windows::Forms::TextBox^  txtMapLogFile;
+			System::Windows::Forms::TextBox^  txtGameLogFile;
+			System::Windows::Forms::TextBox^  txtGameLogUpdate;
+			System::Windows::Forms::Label^  lblGameLogFile;
+			System::Windows::Forms::Label^  lblGameLogUpdate;
+			System::Windows::Forms::Label^  lblGeneralDescription;
+			System::Windows::Forms::Button^  btnMapLogFile;
+			System::Windows::Forms::Button^  btnGameLogFile;
+			System::Windows::Forms::Button^  btnMapOutputFile;
+			System::Windows::Forms::TextBox^  txtMapOutputFile;
+			System::Windows::Forms::Label^  lblMapOutputFile;
+			System::Windows::Forms::Button^  btnMapInputFile;
+			System::Windows::Forms::TextBox^  txtMapInputFile;
+			System::Windows::Forms::Label^  lblMapInputFile;
 		
-		void LoadSettings();
-		void SaveSettings();
-		
-	private: System::Windows::Forms::Button^  btnCancel;
-	private: System::Windows::Forms::Button^  btnOK;
-	private: System::Windows::Forms::TabPage^  tabMap;
-	private: System::Windows::Forms::TabPage^  tabConnection;
-	private: System::Windows::Forms::Button^  btnGetProcessing;
-	private: System::Windows::Forms::TextBox^  txtSavedataFormat;
-
-
-	private: System::Windows::Forms::TextBox^  txtPort;
-	private: System::Windows::Forms::TextBox^  txtURL;
-	private: System::Windows::Forms::Label^  lblProcessing;
-	private: System::Windows::Forms::Label^  lblPortComment;
-	private: System::Windows::Forms::Label^  lblConnectionDescription;
-	private: System::Windows::Forms::Label^  lblPort;
-	private: System::Windows::Forms::Label^  lblURL;
-	private: System::Windows::Forms::TabControl^  tabcSettings;
-	private: System::Windows::Forms::TabPage^  tabGeneral;
-	private: System::Windows::Forms::Label^  lblMapLogFile;
-	private: System::Windows::Forms::TextBox^  txtMapLogFile;
-	private: System::Windows::Forms::TextBox^  txtGameLogFile;
-	private: System::Windows::Forms::TextBox^  txtGameLogUpdate;
-	private: System::Windows::Forms::Label^  lblGameLogFile;
-	private: System::Windows::Forms::Label^  lblGameLogUpdate;
-	private: System::Windows::Forms::Label^  lblGeneralDescription;
-	private: System::Windows::Forms::Button^  btnMapLogFile;
-	private: System::Windows::Forms::Button^  btnGameLogFile;
-
-
-
-	private: System::Windows::Forms::Button^  btnMapOutputFile;
-	private: System::Windows::Forms::TextBox^  txtMapOutputFile;
-	private: System::Windows::Forms::Label^  lblMapOutputFile;
-	private: System::Windows::Forms::Button^  btnMapInputFile;
-	private: System::Windows::Forms::TextBox^  txtMapInputFile;
-	private: System::Windows::Forms::Label^  lblMapInputFile;
-	
-	private:
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		System::ComponentModel::Container ^components;
+		private:
+			/// <summary>
+			/// Required designer variable.
+			/// </summary>
+			System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -99,6 +107,11 @@ namespace MapLog {
 			this->btnCancel = (gcnew System::Windows::Forms::Button());
 			this->btnOK = (gcnew System::Windows::Forms::Button());
 			this->tabMap = (gcnew System::Windows::Forms::TabPage());
+			this->imgMap = (gcnew System::Windows::Forms::PictureBox());
+			this->btnSystemColor = (gcnew System::Windows::Forms::Button());
+			this->btnLineColor = (gcnew System::Windows::Forms::Button());
+			this->btnFontColor = (gcnew System::Windows::Forms::Button());
+			this->btnFontStyle = (gcnew System::Windows::Forms::Button());
 			this->btnMapOutputFile = (gcnew System::Windows::Forms::Button());
 			this->txtMapOutputFile = (gcnew System::Windows::Forms::TextBox());
 			this->lblMapOutputFile = (gcnew System::Windows::Forms::Label());
@@ -126,7 +139,10 @@ namespace MapLog {
 			this->lblGameLogFile = (gcnew System::Windows::Forms::Label());
 			this->lblGameLogUpdate = (gcnew System::Windows::Forms::Label());
 			this->lblGeneralDescription = (gcnew System::Windows::Forms::Label());
+			this->dialFontStyle = (gcnew System::Windows::Forms::FontDialog());
+			this->dialColor = (gcnew System::Windows::Forms::ColorDialog());
 			this->tabMap->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->imgMap))->BeginInit();
 			this->tabConnection->SuspendLayout();
 			this->tabcSettings->SuspendLayout();
 			this->tabGeneral->SuspendLayout();
@@ -157,6 +173,11 @@ namespace MapLog {
 			// 
 			// tabMap
 			// 
+			this->tabMap->Controls->Add(this->imgMap);
+			this->tabMap->Controls->Add(this->btnSystemColor);
+			this->tabMap->Controls->Add(this->btnLineColor);
+			this->tabMap->Controls->Add(this->btnFontColor);
+			this->tabMap->Controls->Add(this->btnFontStyle);
 			this->tabMap->Controls->Add(this->btnMapOutputFile);
 			this->tabMap->Controls->Add(this->txtMapOutputFile);
 			this->tabMap->Controls->Add(this->lblMapOutputFile);
@@ -170,6 +191,57 @@ namespace MapLog {
 			this->tabMap->TabIndex = 2;
 			this->tabMap->Text = L"Dynamic Map";
 			this->tabMap->UseVisualStyleBackColor = true;
+			// 
+			// imgMap
+			// 
+			this->imgMap->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+				| System::Windows::Forms::AnchorStyles::Left) 
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->imgMap->Location = System::Drawing::Point(142, 86);
+			this->imgMap->Name = L"imgMap";
+			this->imgMap->Size = System::Drawing::Size(200, 200);
+			this->imgMap->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->imgMap->TabIndex = 22;
+			this->imgMap->TabStop = false;
+			// 
+			// btnSystemColor
+			// 
+			this->btnSystemColor->Location = System::Drawing::Point(106, 154);
+			this->btnSystemColor->Name = L"btnSystemColor";
+			this->btnSystemColor->Size = System::Drawing::Size(30, 28);
+			this->btnSystemColor->TabIndex = 21;
+			this->btnSystemColor->UseVisualStyleBackColor = false;
+			this->btnSystemColor->Click += gcnew System::EventHandler(this, &Settings::btnSystemColor_Click);
+			// 
+			// btnLineColor
+			// 
+			this->btnLineColor->BackColor = System::Drawing::Color::Transparent;
+			this->btnLineColor->Location = System::Drawing::Point(106, 120);
+			this->btnLineColor->Name = L"btnLineColor";
+			this->btnLineColor->Size = System::Drawing::Size(30, 28);
+			this->btnLineColor->TabIndex = 20;
+			this->btnLineColor->UseVisualStyleBackColor = false;
+			this->btnLineColor->Click += gcnew System::EventHandler(this, &Settings::btnLineColor_Click);
+			// 
+			// btnFontColor
+			// 
+			this->btnFontColor->BackColor = System::Drawing::Color::Transparent;
+			this->btnFontColor->Location = System::Drawing::Point(106, 86);
+			this->btnFontColor->Name = L"btnFontColor";
+			this->btnFontColor->Size = System::Drawing::Size(30, 28);
+			this->btnFontColor->TabIndex = 19;
+			this->btnFontColor->UseVisualStyleBackColor = false;
+			this->btnFontColor->Click += gcnew System::EventHandler(this, &Settings::btnFontColor_Click);
+			// 
+			// btnFontStyle
+			// 
+			this->btnFontStyle->Location = System::Drawing::Point(10, 86);
+			this->btnFontStyle->Name = L"btnFontStyle";
+			this->btnFontStyle->Size = System::Drawing::Size(70, 29);
+			this->btnFontStyle->TabIndex = 18;
+			this->btnFontStyle->Text = L"Map Font";
+			this->btnFontStyle->UseVisualStyleBackColor = true;
+			this->btnFontStyle->Click += gcnew System::EventHandler(this, &Settings::btnFontStyle_Click);
 			// 
 			// btnMapOutputFile
 			// 
@@ -469,6 +541,7 @@ namespace MapLog {
 			this->TopMost = true;
 			this->tabMap->ResumeLayout(false);
 			this->tabMap->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->imgMap))->EndInit();
 			this->tabConnection->ResumeLayout(false);
 			this->tabConnection->PerformLayout();
 			this->tabcSettings->ResumeLayout(false);
@@ -478,9 +551,5 @@ namespace MapLog {
 
 		}
 #pragma endregion
-
-
-
-
 };
 }

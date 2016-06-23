@@ -6,12 +6,13 @@ using namespace MapLog;
 using namespace System;
 using namespace System::IO;
 
-Settings::Settings(void)
+Settings::Settings()
 {
 	this->strDMapInFile = "";
 	this->strDMapOutFile = "";
 	this->strGameLogFile = "";
 	this->strMapLogFile = "";
+	this->strFont = "GenericSansSerif";
 	this->intFontSize = 10;
 	this->strFontColor = "White";
 	this->strJmpLinesColor = "Yellow";
@@ -30,9 +31,14 @@ Settings::~Settings()
 	if (components) delete components;
 }
 
+System::Windows::Forms::DialogResult Settings::LoadAndShow()
+{
+	this->RefreshComponents();
+	return __super::ShowDialog();
+}
+
 System::Void Settings::btnOK_Click(System::Object^  sender, System::EventArgs^  e) 
 {
-
 	this->strDMapInFile = this->txtMapInputFile->Text;
 	this->strDMapOutFile = this->txtMapOutputFile->Text;
 	this->strGameLogFile = this->txtGameLogFile->Text;
@@ -57,6 +63,7 @@ System::Void Settings::btnOK_Click(System::Object^  sender, System::EventArgs^  
 	}
 	this->strURL = this->txtURL->Text;
 	this->strSaveDataFormat = this->txtSavedataFormat->Text;
+	this->DialogResult = System::Windows::Forms::DialogResult::OK;
 	this->Hide();
 }
 
@@ -129,6 +136,63 @@ System::Void Settings::btnCancel_Click(System::Object^  sender, System::EventArg
 	this->Hide();
 }
 
+System::Void Settings::btnFontStyle_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	if (dialFontStyle->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+    {
+		this->strFont = dialFontStyle->Font->Name;
+		this->intFontSize = (int)dialFontStyle->Font->Size;
+    }
+}
+
+System::Void Settings::btnFontColor_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	if (dialColor->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+    {
+		this->strFontColor = dialColor->Color.Name;
+    }
+}
+
+System::Void Settings::btnLineColor_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	if (dialColor->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+    {
+		this->strJmpLinesColor = dialColor->Color.Name;
+    }
+}
+
+System::Void Settings::btnSystemColor_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	if (dialColor->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+    {
+		this->strSystemColor = dialColor->Color.Name;
+    }
+}
+
+void Settings::RefreshComponents()
+{
+	// apply settings to controls
+	this->txtGameLogFile->Text = this->strGameLogFile;
+	this->txtMapLogFile->Text = this->strMapLogFile;
+	this->txtGameLogUpdate->Text = System::Convert::ToString(this->intInterval/1000.0);
+	this->txtMapInputFile->Text = this->strDMapInFile;
+	this->txtMapOutputFile->Text = this->strDMapOutFile;
+	this->txtURL->Text = this->strURL;
+	this->txtPort->Text = System::Convert::ToString(this->intPort);
+	this->txtSavedataFormat->Text = this->strSaveDataFormat;
+	this->btnFontColor->BackColor = System::Drawing::Color::FromName(this->strFontColor);
+	this->btnLineColor->BackColor = System::Drawing::Color::FromName(this->strJmpLinesColor);
+	this->btnSystemColor->BackColor = System::Drawing::Color::FromName(this->strSystemColor);
+
+	this->DialogResult = System::Windows::Forms::DialogResult::None;
+	if (File::Exists(this->strDMapOutFile->Replace("\\", "\\\\")))
+	{
+		System::IO::FileStream^ imgStream = gcnew System::IO::FileStream(this->strDMapOutFile->Replace("\\", "\\\\"), System::IO::FileMode::Open, System::IO::FileAccess::Read);
+		this->imgMap->Image = System::Drawing::Image::FromStream(imgStream);
+		imgStream->Close();
+	}
+}
+
 void Settings::LoadSettings()
 {
 	if (File::Exists(NEWSETTINGS))
@@ -152,6 +216,7 @@ void Settings::LoadSettings()
 			if (strTokens[0] =="Output Interval" && strTokens->Length>=2) this->intInterval = System::Convert::ToInt32(strTokens[1]);
 			if (strTokens[0] =="URL" && strTokens->Length>=2) this->strURL = strTokens[1];
 			if (strTokens[0] =="Port" && strTokens->Length>=2) this->intPort = System::Convert::ToInt32(strTokens[1]);
+			if (strTokens[0] =="Font" && strTokens->Length>=2) this->strFont = strTokens[1];
 			if (strTokens[0] =="Font Size" && strTokens->Length>=2) this->intFontSize = System::Convert::ToInt32(strTokens[1]);
 			if (strTokens[0] =="Font Color" && strTokens->Length>=2) this->strFontColor = strTokens[1];
 			if (strTokens[0] =="JmpLines Color" && strTokens->Length>=2) this->strJmpLinesColor = strTokens[1];
@@ -182,16 +247,7 @@ void Settings::LoadSettings()
 		if (!inFile->EndOfStream) this->strGameLogFile = inFile->ReadLine();
 		inFile->Close();
 	}
-	
-	// apply settings to controls
-	this->txtGameLogFile->Text = this->strGameLogFile;
-	this->txtMapLogFile->Text = this->strMapLogFile;
-	this->txtGameLogUpdate->Text = System::Convert::ToString(this->intInterval/1000.0);
-	this->txtMapInputFile->Text = this->strDMapInFile;
-	this->txtMapOutputFile->Text = this->strDMapOutFile;
-	this->txtURL->Text = this->strURL;
-	this->txtPort->Text = System::Convert::ToString(this->intPort);
-	this->txtSavedataFormat->Text = this->strSaveDataFormat;
+	this->RefreshComponents();
 }
 
 void Settings::SaveSettings()
@@ -204,6 +260,7 @@ void Settings::SaveSettings()
 	outFile->WriteLine("Dynamic Map Output File=" + this->strDMapOutFile);
 	outFile->WriteLine("[Settings]");
 	outFile->WriteLine("Output Interval=" + this->intInterval);
+	outFile->WriteLine("Font=" + this->strFont);
 	outFile->WriteLine("Font Size=" + this->intFontSize);
 	outFile->WriteLine("Font Color=" + this->strFontColor);
 	outFile->WriteLine("JmpLines Color=" + this->strJmpLinesColor);

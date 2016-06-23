@@ -25,7 +25,7 @@ MapGraphics::~MapGraphics(void)
 {
 }
 
-void MapGraphics::RenderMap(NavData* inNav, System::String^ sourceFile, System::String^ destFile, int fontSize, System::String^ fontColor, System::String^ jmpLinesColor, System::String^ systemColor)
+void MapGraphics::RenderMap(NavData* inNav, System::String^ sourceFile, System::String^ destFile, System::String^ fontStyle, int fontSize, System::String^ fontColor, System::String^ jmpLinesColor, System::String^ systemColor)
 { // note that the game Z axis maps onto the display Y axis
 	
 	System::Drawing::Brush^ currentBrush;
@@ -37,7 +37,9 @@ void MapGraphics::RenderMap(NavData* inNav, System::String^ sourceFile, System::
 	Pos pos2;
 	NavEntry* currentEntry;
 	NavEntry* navDest = new NavEntry();
-	currentFont = gcnew System::Drawing::Font(System::Drawing::FontFamily::GenericSansSerif,(float)fontSize);
+	
+	currentFont = gcnew System::Drawing::Font(fontStyle,(float)fontSize);
+	//currentFont = gcnew System::Drawing::Font(System::Drawing::FontFamily::GenericSansSerif,(float)fontSize);
 	this->sourceImage = System::Drawing::Image::FromFile(sourceFile);
 	this->canvas = System::Drawing::Graphics::FromImage(this->sourceImage);
 	

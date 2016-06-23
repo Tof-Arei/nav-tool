@@ -8,7 +8,7 @@ private:
 	float xBorder, yBorder, xStart, yStart, xScale, yScale;
 public:
 	MapGraphics(float inXBorder, float inYBorder, float inXStart, float inYStart, float inXScale, float inYScale);
-	void RenderMap(NavData*, System::String^, System::String^, int, System::String^, System::String^, System::String^);
+	void RenderMap(NavData*, System::String^, System::String^, System::String^, int, System::String^, System::String^, System::String^);
 	Pos CalculateScale(Pos inPos);
 	~MapGraphics(void);
 };

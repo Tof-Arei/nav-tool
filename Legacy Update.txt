@@ -6,11 +6,9 @@ Tested/fixed:
 - Custom map injection
 
 Added/restored:
-- Font size, color and map color options for dynamic map (config file only)
+- Font style, size, color and map color options for dynamic map +GUI
 
 To test/restore/fix:
-- Font style option for dynamic map
-- Dynamic map options GUI
 - Route calculator: remove the extra step(s) backwards?
 - Sending data to HTTP server
 - ?
