@@ -346,6 +346,7 @@ System::Void Navigation::optionsToolStripMenuItem_Click(System::Object^  sender,
 	if (this->frmSettings->LoadAndShow() == System::Windows::Forms::DialogResult::OK)
     {
 		this->Save();
+		System::GC::Collect();
 	}
 }
 
