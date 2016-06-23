@@ -41,6 +41,7 @@ namespace MapLog {
 			// functions
 			Settings();
 			System::Windows::Forms::DialogResult LoadAndShow();
+			unsigned int RgbToInteger(int, int, int);
 		protected:
 			~Settings();
 			void RefreshComponents();

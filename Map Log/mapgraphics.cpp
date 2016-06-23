@@ -25,7 +25,8 @@ MapGraphics::~MapGraphics(void)
 {
 }
 
-void MapGraphics::RenderMap(NavData* inNav, System::String^ sourceFile, System::String^ destFile, System::String^ fontStyle, int fontSize, System::String^ fontColor, System::String^ jmpLinesColor, System::String^ systemColor)
+void MapGraphics::RenderMap(NavData* inNav, System::String^ sourceFile, System::String^ destFile,
+							System::String^ fontStyle, int fontSize, System::String^ fontColor, System::String^ jmpLinesColor, System::String^ systemColor)
 { // note that the game Z axis maps onto the display Y axis
 	
 	System::Drawing::Brush^ currentBrush;
@@ -39,11 +40,10 @@ void MapGraphics::RenderMap(NavData* inNav, System::String^ sourceFile, System::
 	NavEntry* navDest = new NavEntry();
 	
 	currentFont = gcnew System::Drawing::Font(fontStyle,(float)fontSize);
-	//currentFont = gcnew System::Drawing::Font(System::Drawing::FontFamily::GenericSansSerif,(float)fontSize);
 	this->sourceImage = System::Drawing::Image::FromFile(sourceFile);
 	this->canvas = System::Drawing::Graphics::FromImage(this->sourceImage);
 	
-	currentPen = gcnew System::Drawing::Pen(System::Drawing::Color::FromName(jmpLinesColor));
+	currentPen = gcnew System::Drawing::Pen(System::Drawing::ColorTranslator::FromHtml(jmpLinesColor));
 	
 	for (int intIndex = 0; intIndex<inNav->GetEntryCount(); intIndex++)
 	{ // display jump lines
@@ -73,7 +73,7 @@ void MapGraphics::RenderMap(NavData* inNav, System::String^ sourceFile, System::
 			
 			pos1 = this->CalculateScale(pos1);
 			
-			currentBrush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromName(systemColor));
+			currentBrush = gcnew System::Drawing::SolidBrush(System::Drawing::ColorTranslator::FromHtml(systemColor));
 			this->canvas->FillEllipse(
 				currentBrush,
 				float(pos1.x)-5,
@@ -84,7 +84,7 @@ void MapGraphics::RenderMap(NavData* inNav, System::String^ sourceFile, System::
 			currentText = gcnew System::String(currentEntry->name);
 			textSize = this->canvas->MeasureString(currentText, currentFont);
 			
-			currentBrush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::FromName(fontColor));
+			currentBrush = gcnew System::Drawing::SolidBrush(System::Drawing::ColorTranslator::FromHtml(fontColor));
 			this->canvas->DrawString(
 				currentText, currentFont, currentBrush, 
 				float(pos1.x) - (textSize.Width/2), 

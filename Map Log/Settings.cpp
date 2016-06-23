@@ -14,9 +14,9 @@ Settings::Settings()
 	this->strMapLogFile = "";
 	this->strFont = "GenericSansSerif";
 	this->intFontSize = 10;
-	this->strFontColor = "White";
-	this->strJmpLinesColor = "Yellow";
-	this->strSystemColor = "Green";
+	this->strFontColor = "";
+	this->strJmpLinesColor = "";
+	this->strSystemColor = "";
 	this->intInterval = 5000;
 	this->strURL = "";
 	this->intPort = 80; // standard TCP port
@@ -35,6 +35,11 @@ System::Windows::Forms::DialogResult Settings::LoadAndShow()
 {
 	this->RefreshComponents();
 	return __super::ShowDialog();
+}
+
+unsigned int Settings::RgbToInteger(int r, int g, int b)
+{
+	return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
 }
 
 System::Void Settings::btnOK_Click(System::Object^  sender, System::EventArgs^  e) 
@@ -149,7 +154,7 @@ System::Void Settings::btnFontColor_Click(System::Object^  sender, System::Event
 {
 	if (dialColor->ShowDialog() == System::Windows::Forms::DialogResult::OK)
     {
-		this->strFontColor = dialColor->Color.Name;
+		this->strFontColor = System::Drawing::ColorTranslator::ToHtml(dialColor->Color);
     }
 }
 
@@ -157,7 +162,7 @@ System::Void Settings::btnLineColor_Click(System::Object^  sender, System::Event
 {
 	if (dialColor->ShowDialog() == System::Windows::Forms::DialogResult::OK)
     {
-		this->strJmpLinesColor = dialColor->Color.Name;
+		this->strJmpLinesColor = System::Drawing::ColorTranslator::ToHtml(dialColor->Color);
     }
 }
 
@@ -165,7 +170,7 @@ System::Void Settings::btnSystemColor_Click(System::Object^  sender, System::Eve
 {
 	if (dialColor->ShowDialog() == System::Windows::Forms::DialogResult::OK)
     {
-		this->strSystemColor = dialColor->Color.Name;
+		this->strSystemColor = System::Drawing::ColorTranslator::ToHtml(dialColor->Color);
     }
 }
 
@@ -180,9 +185,9 @@ void Settings::RefreshComponents()
 	this->txtURL->Text = this->strURL;
 	this->txtPort->Text = System::Convert::ToString(this->intPort);
 	this->txtSavedataFormat->Text = this->strSaveDataFormat;
-	this->btnFontColor->BackColor = System::Drawing::Color::FromName(this->strFontColor);
-	this->btnLineColor->BackColor = System::Drawing::Color::FromName(this->strJmpLinesColor);
-	this->btnSystemColor->BackColor = System::Drawing::Color::FromName(this->strSystemColor);
+	this->btnFontColor->BackColor = System::Drawing::ColorTranslator::FromHtml(this->strFontColor);
+	this->btnLineColor->BackColor = System::Drawing::ColorTranslator::FromHtml(this->strJmpLinesColor);
+	this->btnSystemColor->BackColor = System::Drawing::ColorTranslator::FromHtml(this->strSystemColor);
 
 	this->DialogResult = System::Windows::Forms::DialogResult::None;
 	if (File::Exists(this->strDMapOutFile->Replace("\\", "\\\\")))
