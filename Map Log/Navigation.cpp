@@ -687,23 +687,27 @@ System::Void Navigation::treeObjects_DoubleClick(System::Object^ sender, System:
 				int intWaypoint = int(bestRoute.size())-intIndex;
 				String^ strTemp;
 				NavEntry* newEntry = new NavEntry(*(bestRoute[intIndex]));
-				newEntry->SetType(NAVOUT);
-				newEntry->SetParent(NULL); // or the waypoints could appear ANYWHERE!
-				strTemp = String::Concat
-				(
-					gcnew String("Waypoint "), 
-					intWaypoint.ToString(),
-					gcnew String(" - "),
-					gcnew String(bestRoute[intIndex]->name)
-				);
-				strTemp = String::Concat
-				(
-					strTemp,
-					gcnew String(" "),
-					gcnew String(bestRoute[intIndex]->type)
-				);
-				newEntry->SetName((char*)(Marshal::StringToHGlobalAnsi(strTemp).ToPointer()));
-				this->currentUniverse->AddEntry(newEntry);
+				
+				if (gcnew System::String(newEntry->type) != "Jump")
+				{
+					newEntry->SetType(NAVOUT);
+					newEntry->SetParent(NULL); // or the waypoints could appear ANYWHERE!
+					strTemp = String::Concat
+					(
+						gcnew String("Waypoint "), 
+						intWaypoint.ToString(),
+						gcnew String(" - "),
+						gcnew String(bestRoute[intIndex]->name)
+					);
+					strTemp = String::Concat
+					(
+						strTemp,
+						gcnew String(" "),
+						gcnew String(bestRoute[intIndex]->type)
+					);
+					newEntry->SetName((char*)(Marshal::StringToHGlobalAnsi(strTemp).ToPointer()));
+					this->currentUniverse->AddEntry(newEntry);
+				}
 			}
 			if (File::Exists(this->frmSettings->strMapLogFile->Replace("\\","\\\\")) && this->chkUpdateNav->Checked)
 				this->currentUniverse->SaveNavLogFile(this->frmSettings->strMapLogFile->Replace("\\","\\\\"));

@@ -4,11 +4,11 @@ Tested/fixed:
 - Link jumpgates
 - Reading/injecting map log
 - Custom map injection
+- Removed extra backwards waypoints in the route calculator
 
 Added/restored:
 - Font style, size, color and map color options for dynamic map +GUI
 
 To test/restore/fix:
-- Route calculator: remove the extra step(s) backwards?
 - Sending data to HTTP server
 - ?
